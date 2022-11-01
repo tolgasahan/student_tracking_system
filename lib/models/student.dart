@@ -20,6 +20,10 @@ class Student {
     this.grade = grade;
   }
 
+  Student.withoutInfo(){
+
+  }
+
   String get getStatus {
     if (this.grade >= 50) {
       return "Successful";

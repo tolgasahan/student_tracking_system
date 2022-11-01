@@ -2,6 +2,7 @@ import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:student_tracking_system/models/student.dart';
+import 'package:student_tracking_system/screens/student_add.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -100,7 +101,9 @@ class _MyAppState extends State<MyApp> {
                     Text("Add")
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentAdd()));
+                },
               ),
             ),
             Flexible(
