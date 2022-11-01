@@ -14,8 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String banner = "Student Tracker System";
-  Student selectedStudent = Student.withID(0,"", "", "", 0);
-  Student selectedStudentIsNull = Student.withID(0,"", "", "", 0);
+  Student selectedStudent = Student.withID(0, "", "", "", 0);
   List<Student> students = [
     Student.withID(
         1,
@@ -45,13 +44,15 @@ class _MyAppState extends State<MyApp> {
         ),
         body: buildBody(context));
   }
-void showMessage(BuildContext context, String title, String content){
+
+  void showMessage(BuildContext context, String title, String content) {
     var alert = AlertDialog(
       title: Text(title),
       content: Text(content),
     );
     showDialog(context: context, builder: (BuildContext context) => alert);
-}
+  }
+
   Widget buildBody(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -139,15 +140,14 @@ void showMessage(BuildContext context, String title, String content){
                 ),
                 onPressed: () {
                   if (selectedStudent.id == 0) {
-                  showMessage(context, "Error","Select a student");
-                  }
-                  else if(students.isEmpty == true){
-                    showMessage(context, "Error","Student not found");
-                  }
-                  else{
+                    showMessage(context, "Error", "Select a student");
+                  } else if (students.isEmpty == true) {
+                    showMessage(context, "Error", "Student not found");
+                  } else {
                     setState(() {
                       students.remove(selectedStudent);
-                      showMessage(context, "Delete", selectedStudent.firstName+" successful deleted");
+                      showMessage(context, "Delete",
+                          selectedStudent.firstName + " successful deleted");
                       selectedStudent = Student.withID(0, "", "", "", 0);
                     });
                   }
