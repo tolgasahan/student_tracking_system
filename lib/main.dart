@@ -15,6 +15,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String banner = "Student Tracker System";
   Student selectedStudent = Student.withID(0,"", "", "", 0);
+  Student selectedStudentIsNull = Student.withID(0,"", "", "", 0);
   List<Student> students = [
     Student.withID(
         1,
@@ -137,10 +138,19 @@ void showMessage(BuildContext context, String title, String content){
                   ],
                 ),
                 onPressed: () {
-                  setState(() {
-                    students.remove(selectedStudent);
-                  });
-                  showMessage(context, "Delete", selectedStudent.firstName+" successful deleted");
+                  if (selectedStudent.id == 0) {
+                  showMessage(context, "Error","Select a student");
+                  }
+                  else if(students.isEmpty == true){
+                    showMessage(context, "Error","Student not found");
+                  }
+                  else{
+                    setState(() {
+                      students.remove(selectedStudent);
+                      showMessage(context, "Delete", selectedStudent.firstName+" successful deleted");
+                      selectedStudent = Student.withID(0, "", "", "", 0);
+                    });
+                  }
                 },
               ),
             ),
