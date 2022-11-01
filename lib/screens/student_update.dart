@@ -2,30 +2,28 @@ import "package:flutter/material.dart";
 import 'package:student_tracking_system/models/student.dart';
 import 'package:student_tracking_system/validation/student_validator.dart';
 
-class StudentAdd extends StatefulWidget {
-  List<Student>? students;
-  StudentAdd(List<Student> students){
-    this.students = students;
+class StudentUpdate extends StatefulWidget {
+  Student? selectedStudent;
+  StudentUpdate(Student selectedStudent) {
+    this.selectedStudent = selectedStudent;
   }
   @override
   State<StatefulWidget> createState() {
-    return _StudentAddState(students!);
+    return _StudentUpdateState(selectedStudent!);
   }
 }
 
-
-class _StudentAddState extends State with StudentValidationMixin {
-  List<Student>? students;
-  _StudentAddState(List<Student> students){
-    this.students = students;
+class _StudentUpdateState extends State with StudentValidationMixin {
+  Student? selectedStudent;
+  _StudentUpdateState(Student selectedStudent) {
+    this.selectedStudent = selectedStudent;
   }
-  var student = Student.withoutInfo();
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add a new student"),
+          title: Text("Update "+ selectedStudent!.firstName),
         ),
         body: Container(
           margin: EdgeInsets.all(30.0),
@@ -45,34 +43,49 @@ class _StudentAddState extends State with StudentValidationMixin {
 
   Widget buildFirstNameField() {
     return TextFormField(
+      initialValue: selectedStudent!.firstName,
       decoration: InputDecoration(
         labelText: "Name",
         hintText: "Tolga",
       ),
-      validator: (value) {return validateFirstName(value);},
-      onSaved: (value) {student.firstName = value.toString();},
+      validator: (value) {
+        return validateFirstName(value);
+      },
+      onSaved: (value) {
+        selectedStudent!.firstName = value.toString();
+      },
     );
   }
 
   Widget buildLastNameField() {
     return TextFormField(
+      initialValue: selectedStudent!.lastName,
       decoration: InputDecoration(
         labelText: "Surname",
         hintText: "Şahan",
       ),
-      validator: (value) {return validateLastName(value);},
-      onSaved: (value) {student.lastName = value.toString();},
+      validator: (value) {
+        return validateLastName(value);
+      },
+      onSaved: (value) {
+        selectedStudent!.lastName = value.toString();
+      },
     );
   }
 
   Widget buildGradeField() {
     return TextFormField(
+      initialValue: selectedStudent!.grade.toString(),
       decoration: InputDecoration(
         labelText: "Grade",
         hintText: "100",
       ),
-      validator: (value) {return validateGrade(value);},
-      onSaved: (value) {student.grade = int.parse(value!);},
+      validator: (value) {
+        return validateGrade(value);
+      },
+      onSaved: (value) {
+        selectedStudent!.grade = int.parse(value!);
+      },
     );
   }
 
@@ -80,20 +93,18 @@ class _StudentAddState extends State with StudentValidationMixin {
     return ElevatedButton(
       child: Text("Save"),
       onPressed: () {
-       if(formKey.currentState!.validate()){
-         formKey.currentState!.save();
-         student.id = 12;
-         students?.add(student);
-         saveStudent();
-           Navigator.pop(context);
-       }
+        if (formKey.currentState!.validate()) {
+          formKey.currentState!.save();
+          saveStudent();
+          Navigator.pop(context);
+        }
       },
     );
   }
 
   void saveStudent() {
-    print(student.firstName);
-    print(student.lastName);
-    print(student.grade.toString());
+    print(selectedStudent!.firstName);
+    print(selectedStudent!.lastName);
+    print(selectedStudent!.grade.toString());
   }
 }

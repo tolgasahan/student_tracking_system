@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:student_tracking_system/models/student.dart';
 import 'package:student_tracking_system/screens/student_add.dart';
+import 'package:student_tracking_system/screens/student_update.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -90,7 +91,7 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blueGrey, // Background color
+                  backgroundColor: Colors.blueGrey, // Background color
                 ),
                 child: Row(
                   children: [
@@ -102,7 +103,11 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentAdd()));
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StudentAdd(students)))
+                      .then((value) => setState(() {selectedStudent = Student.withID(0, "", "", "", 0);}));
                 },
               ),
             ),
@@ -122,7 +127,19 @@ class _MyAppState extends State<MyApp> {
                     Text("Update")
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (selectedStudent.id == 0) {
+                    showMessage(
+                        context, "Error", "You should select a student");
+                  } else {
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    StudentUpdate(selectedStudent)))
+                        .then((value) => setState(() {selectedStudent = Student.withID(0, "", "", "", 0);}));
+                  }
+                },
               ),
             ),
             Flexible(
