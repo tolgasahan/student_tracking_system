@@ -14,11 +14,11 @@ class Student{
 
   String get getStatus{
     if(this.grade >= 50){
-      return "Geçti";
+      return "Successful";
     }else if(this.grade >= 40){
-      return "Bütünlemeye Kaldı";
+      return "Make-up Exam";
     }else{
-      return "Kaldı";
+      return "Fail";
     }
 
   }
